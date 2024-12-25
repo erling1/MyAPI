@@ -1,23 +1,33 @@
+"""from picamera.array import PiRGBArray
+from picamera import PiCamera"""
+import time
 import cv2
-
-cam = cv2.VideoCapture(0)
-
-frame_width = int(cam.get(cv2.CAP_PROP_FRAME_WIDTH))
-frame_height = int(cam.get(cv2.CAP_PROP_FRAME_HEIGHT))
-
-"""while True:
-    ret, frame = cam.read()"""
-
-
 
 class ObjectTracker:
 
     def __init__(self, Camera_path : str = 0) -> None:
         self.cam = cv2.VideoCapture(Camera_path)
 
-    def Show_Video(self,):
+
+    def Show_Video(self):
+
+        """# initialize the camera and grab a reference to the raw camera capture
+        camera = PiCamera()
+
+        rawCapture = PiRGBArray(camera)
+        # allow the camera to warmup
+        time.sleep(0.1)
+
+        # grab an image from the camera
+        camera.capture(rawCapture, format="bgr")
+        image = rawCapture.array
+
+        # display the image on screen and wait for a keypress
+        cv2.imshow("Image", image)
+        cv2.waitKey(0)"""
+
         while True:
-            ret, frame = cam.read()
+            ret, frame = self.cam.read()
 
             # Display the captured frame
             cv2.imshow('Camera', frame)
@@ -27,7 +37,7 @@ class ObjectTracker:
                 break
 
         # Release the capture and writer objects
-        cam.release()
+        self.cam.release()
         cv2.destroyAllWindows()
 
     def Track(self, alorithm: str = 'haar-cascade'):
@@ -56,4 +66,9 @@ class ObjectTracker:
             cv2.imshow('Detected faces', img) 
             
             cv2.waitKey(0) 
-        
+
+
+
+
+test = ObjectTracker()
+test.Show_Video()
